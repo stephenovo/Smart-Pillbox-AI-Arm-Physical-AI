@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://careloop-edge.openai.site"),
+  metadataBase: new URL("https://careloop-edge-arm-ai.workers.dev"),
   title: {
     default: "CareLoop Edge — Arm Physical AI",
     template: "%s · CareLoop Edge",

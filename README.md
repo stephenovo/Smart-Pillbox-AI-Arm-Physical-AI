@@ -23,6 +23,16 @@ The command refuses non-Arm hosts, compiles the portable C/Arm NEON kernel, and
 prints machine-readable JSON. See `evidence/benchmark.arm64.sample.json` for the
 display dataset, full disclosure, and test method.
 
+## Deploy to Cloudflare
+
+```bash
+npm run deploy:cloudflare
+```
+
+This builds the vinext worker and publishes it to the standalone
+`careloop-edge-arm-ai.workers.dev` service. It does not change the original
+Smart Pillbox AI Cloudflare Worker or `smartpb.me` domain.
+
 ## Project surfaces
 
 - `app/EdgeConsole.tsx`: interactive judge-facing Physical AI demo
