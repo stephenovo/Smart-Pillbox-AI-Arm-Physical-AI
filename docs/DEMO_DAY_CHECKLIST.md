@@ -65,8 +65,8 @@ Target 2:40–2:55 so there is room under the limit.
 - 2:35–2:55 — safety boundary and impact
 
 Record at 1080p, enlarge the browser to 110–125%, hide notifications, and use a
-clean browser profile. Upload the result to a publicly viewable or unlisted
-video URL and verify it while signed out.
+clean browser profile. Upload the result as a **publicly visible** YouTube,
+Vimeo, or Youku video and verify it while signed out.
 
 ## 5. Complete Devpost
 
@@ -77,7 +77,7 @@ Submit the following package:
 - written description from `docs/DEVPOST_SUBMISSION.md`
 - live Cloudflare URL
 - public GitHub repository URL
-- public/unlisted video URL
+- publicly visible YouTube, Vimeo, or Youku video URL
 - screenshots of the hero, simulation console, Arm64 evidence, and architecture
 - technologies: Arm64, NEON, C, Next.js/React, Cloudflare Workers, ESP32-S3
 
