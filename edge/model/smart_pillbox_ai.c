@@ -1,4 +1,4 @@
-#include "careloop_edge.h"
+#include "smart_pillbox_ai.h"
 
 #if defined(__aarch64__) || defined(__ARM_NEON)
 #include <arm_neon.h>
@@ -9,7 +9,7 @@ static int initialized;
 static int8_t w1[HIDDEN_A][INPUTS], w2[HIDDEN_B][HIDDEN_A], w3[OUTPUTS][HIDDEN_B];
 static float fw1[HIDDEN_A][INPUTS], fw2[HIDDEN_B][HIDDEN_A], fw3[OUTPUTS][HIDDEN_B];
 
-void careloop_init(void) {
+void smart_pillbox_init(void) {
   if (initialized) return;
   for (size_t r=0;r<HIDDEN_A;r++) for(size_t c=0;c<INPUTS;c++) {
     w1[r][c]=(int8_t)(((r*7+c*11+3)%15)-7); fw1[r][c]=(float)w1[r][c];
@@ -23,7 +23,7 @@ void careloop_init(void) {
   initialized=1;
 }
 
-static void expand(careloop_features_t input, int8_t x[INPUTS]) {
+static void expand(smart_pillbox_features_t input, int8_t x[INPUTS]) {
   int8_t seed[8]={input.timing_delta,input.no_open_window,input.slot_mismatch,
     input.repeat_open,input.routine_deviation,input.connectivity_loss,16,8};
   for(size_t i=0;i<INPUTS;i++) x[i]=(int8_t)((seed[i%8]+(int8_t)(i*3))>>1);
@@ -51,15 +51,15 @@ static uint8_t score(int32_t value) {
   if(value<0)return 0;if(value>100)return 100;return(uint8_t)value;
 }
 
-careloop_scores_t careloop_infer_int8(careloop_features_t input) {
-  careloop_init();
+smart_pillbox_scores_t smart_pillbox_infer_int8(smart_pillbox_features_t input) {
+  smart_pillbox_init();
   int8_t x[INPUTS],a[HIDDEN_A],b[HIDDEN_B];
   expand(input,x);
   for(size_t r=0;r<HIDDEN_A;r++) a[r]=relu_q(dot_int8(x,w1[r],INPUTS));
   for(size_t r=0;r<HIDDEN_B;r++) b[r]=relu_q(dot_int8(a,w2[r],HIDDEN_A));
   int32_t out[OUTPUTS];
   for(size_t r=0;r<OUTPUTS;r++) out[r]=dot_int8(b,w3[r],HIDDEN_B);
-  careloop_scores_t result={score(out[0]),score(out[1]),score(out[2]),score(out[3])};
+  smart_pillbox_scores_t result={score(out[0]),score(out[1]),score(out[2]),score(out[3])};
   return result;
 }
 
@@ -68,18 +68,18 @@ __attribute__((optnone))
 #elif defined(__GNUC__)
 __attribute__((optimize("no-tree-vectorize")))
 #endif
-careloop_scores_t careloop_infer_fp32(careloop_features_t input) {
-  careloop_init();
+smart_pillbox_scores_t smart_pillbox_infer_fp32(smart_pillbox_features_t input) {
+  smart_pillbox_init();
   int8_t qx[INPUTS]; float x[INPUTS],a[HIDDEN_A],b[HIDDEN_B],out[OUTPUTS]={0};
   expand(input,qx); for(size_t i=0;i<INPUTS;i++)x[i]=(float)qx[i];
   for(size_t r=0;r<HIDDEN_A;r++){float sum=0;for(size_t c=0;c<INPUTS;c++)sum+=x[c]*fw1[r][c];a[r]=sum>0?sum/128.0f:0;}
   for(size_t r=0;r<HIDDEN_B;r++){float sum=0;for(size_t c=0;c<HIDDEN_A;c++)sum+=a[c]*fw2[r][c];b[r]=sum>0?sum/128.0f:0;}
   for(size_t r=0;r<OUTPUTS;r++)for(size_t c=0;c<HIDDEN_B;c++)out[r]+=b[c]*fw3[r][c];
-  careloop_scores_t result={score((int32_t)out[0]),score((int32_t)out[1]),score((int32_t)out[2]),score((int32_t)out[3])};
+  smart_pillbox_scores_t result={score((int32_t)out[0]),score((int32_t)out[1]),score((int32_t)out[2]),score((int32_t)out[3])};
   return result;
 }
 
-const char *careloop_action(careloop_scores_t score_value) {
+const char *smart_pillbox_action(smart_pillbox_scores_t score_value) {
   if(score_value.selection_error>=65)return "lock_reminder:red_slot_light";
   if(score_value.duplicate_risk>=65)return "hold_alert:confirm_with_user";
   if(score_value.missed_window>=65)return "pulse_amber:caregiver_alert";

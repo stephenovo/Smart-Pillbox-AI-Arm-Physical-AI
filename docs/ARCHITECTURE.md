@@ -1,4 +1,4 @@
-# CareLoop Edge architecture
+# Smart Pillbox AI architecture
 
 ```text
 physical compartment switches / simulated fixtures
@@ -7,7 +7,7 @@ physical compartment switches / simulated fixtures
         (Xtensa; deterministic acquisition)
                      │ signed event envelope
                      ▼
-             Arm64 Edge Guardian
+             Arm64 AI Module
         INT8 risk model + deterministic policy
                      │
        light / buzzer / local queue / caregiver alert

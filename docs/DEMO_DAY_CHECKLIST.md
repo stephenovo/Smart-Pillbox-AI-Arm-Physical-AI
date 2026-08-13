@@ -9,13 +9,13 @@ deadline so the final Devpost save and submission are not racing the clock.
 Do not redesign the product on submission morning. Confirm that these two URLs
 open in a signed-out/private browser window:
 
-- Live experience: <https://careloop-edge-arm-ai.stephenovo.workers.dev>
-- Public source: <https://github.com/stephenovo/Careloop-Edge-Arm-AI>
+- Live experience: <https://smart-pillbox-ai-arm-physical-ai.stephenovo.workers.dev>
+- Public source: <https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI>
 
 Then capture the exact Git commit used in the video:
 
 ```bash
-cd /path/to/careloop-edge-arm-ai
+cd /path/to/smart-pillbox-ai-arm-physical-ai
 git pull --ff-only
 git rev-parse --short HEAD
 ```

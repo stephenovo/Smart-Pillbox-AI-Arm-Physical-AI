@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Scenario = "on-time" | "missed" | "wrong-slot" | "duplicate" | "offline";
@@ -136,38 +137,39 @@ export default function EdgeConsole() {
   return (
     <main>
       <nav className="nav shell" aria-label="Primary navigation">
-        <a className="brand" href="#top" aria-label="CareLoop Edge home">
-          <span className="brandMark"><i /><i /><i /></span>
-          <span>CareLoop <strong>Edge</strong></span>
+        <a className="brand" href="#top" aria-label="Smart Pillbox AI home">
+          <Image src="/brand-icon.png" alt="" aria-hidden="true" width={32} height={32} priority />
+          <span>Smart Pillbox <strong>AI</strong></span>
         </a>
         <div className="navLinks">
-          <button className={view === "demo" ? "active" : ""} onClick={() => showConsole("demo")}>Live demo</button>
-          <button className={view === "evidence" ? "active" : ""} onClick={() => showConsole("evidence")}>Evidence</button>
-          <a href="#architecture">Architecture</a>
-          <a className="repoLink" href="https://github.com/stephenovo/Careloop-Edge-Arm-AI" target="_blank" rel="noreferrer">Source ↗</a>
+          <a href="#product">Product</a>
+          <a href="#how-it-works">How it works</a>
+          <button className={view === "demo" ? "active" : ""} onClick={() => showConsole("demo")}>Try demo</button>
+          <button className={view === "evidence" ? "active" : ""} onClick={() => showConsole("evidence")}>Arm proof</button>
+          <a className="repoLink" href="https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI" target="_blank" rel="noreferrer">Source ↗</a>
         </div>
       </nav>
 
       <section id="top" className="hero shell">
         <div className="heroCopy">
           <div className="eyebrow"><span className="pulse" /> ARM CREATE · PHYSICAL AI TRACK</div>
-          <h1>Medication safety<br />that never leaves <em>home.</em></h1>
-          <p className="lede">A privacy-first Physical AI prototype: production-shaped pillbox events, an Arm64-optimized inference kernel, and bounded safety actions.</p>
+          <h1>A smarter routine.<br /><em>More peace of mind.</em></h1>
+          <p className="lede">Smart Pillbox AI pairs a calm medication companion with private Arm64 intelligence—spotting missed, repeated, or wrong-compartment events while the routine is still close to home.</p>
           <div className="heroActions">
-            <button className="primary" onClick={() => showConsole("demo")}>Run the sensor simulation <span>→</span></button>
-            <button className="secondary" onClick={() => showConsole("evidence")}>Inspect Arm64 evidence</button>
+            <button className="primary" onClick={() => showConsole("demo")}>Try the live product demo <span>→</span></button>
+            <a className="secondary" href="#product">Explore the product</a>
           </div>
           <div className="trustRow">
-            <span><b>Arm64</b> native kernel</span>
-            <span><b>INT8</b> NEON fast path</span>
-            <span><b>5</b> sensor fixtures</span>
+            <span><b>Private</b> by architecture</span>
+            <span><b>Offline</b> safety loop</span>
+            <span><b>Arm64</b> optimized</span>
           </div>
         </div>
 
-        <div className="heroVisual" aria-label="CareLoop Edge physical AI architecture preview">
+        <div className="heroVisual" aria-label="Smart Pillbox AI physical product preview">
           <div className="visualGlow" />
           <div className="pillbox">
-            <div className="pillboxTop"><span>CARELOOP</span><i className={running ? "blink" : ""} /></div>
+            <div className="pillboxTop"><span>SMART PILLBOX AI</span><i className={running ? "blink" : ""} /></div>
             <div className="slots">
               {["M", "T", "W", "T", "F", "S", "S", "+"].map((day, index) => <div key={`${day}-${index}`} className={index === 1 ? data.tone : ""}><span>{day}</span><b>{index + 1}</b></div>)}
             </div>
@@ -187,19 +189,59 @@ export default function EdgeConsole() {
         </div>
       </section>
 
-      <section className="proofRail shell" aria-label="Evidence status">
-        <div><span className="proofIcon simulated">S</span><p><strong>Sensor layer</strong><small>Simulated production-shaped events</small></p></div>
+      <section className="proofRail shell" aria-label="Product system">
+        <div><span className="proofIcon simulated">P</span><p><strong>Smart pillbox</strong><small>Gentle reminders + compartment sensing</small></p></div>
         <i>→</i>
-        <div><span className="proofIcon verified">A</span><p><strong>Compute layer</strong><small>Native Apple Silicon Arm64 run</small></p></div>
+        <div><span className="proofIcon verified">A</span><p><strong>Private intelligence</strong><small>Nearby Arm64 risk inference</small></p></div>
         <i>→</i>
-        <div><span className="proofIcon open">O</span><p><strong>Evidence layer</strong><small>Open source harness + raw JSON</small></p></div>
+        <div><span className="proofIcon open">H</span><p><strong>Human action</strong><small>Clear light, prompt, or caregiver alert</small></p></div>
+      </section>
+
+      <section id="product" className="productStory shell">
+        <div className="productCopy">
+          <span className="kicker">DESIGNED FOR DAILY LIFE</span>
+          <h2>Familiar enough for every day.<br />Smart enough to notice.</h2>
+          <p>The pillbox stays simple: the right compartment lights at the right time, an opening becomes a quiet event, and the system raises only the next useful action. No camera. No constant check-in. No medical guesswork.</p>
+          <ul>
+            <li><span>01</span><div><strong>Gentle guidance</strong><small>Light and reminder cues keep the routine easy to follow.</small></div></li>
+            <li><span>02</span><div><strong>Automatic awareness</strong><small>Timing, slot and repeat-opening patterns become meaningful signals.</small></div></li>
+            <li><span>03</span><div><strong>Calm escalation</strong><small>Only unusual moments become a prompt or caregiver alert.</small></div></li>
+          </ul>
+        </div>
+        <div className="productVisual">
+          <div className="productHalo" />
+          <Image src="/smart-pillbox-product.png" alt="Smart Pillbox AI eight-compartment product concept" width={1448} height={1086} sizes="(max-width: 900px) calc(100vw - 30px), 650px" />
+          <span>8-compartment product concept</span>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="howSection">
+        <div className="shell">
+          <div className="howHeading"><span className="kicker">ONE SIMPLE LOOP</span><h2>From reminder to reassurance.</h2><p>Physical AI is useful only when sensing, intelligence and action feel like one calm product experience.</p></div>
+          <div className="howGrid">
+            <ProductStep number="01" icon="◌" title="The pillbox notices" copy="A schedule or compartment event is captured at the moment it happens." />
+            <ProductStep number="02" icon="✣" title="Arm intelligence checks" copy="A compact local model scores timing, mismatch and repeat-opening risk." />
+            <ProductStep number="03" icon="✓" title="The next action stays clear" copy="A deterministic policy chooses a light, confirmation prompt, local queue or alert." />
+          </div>
+        </div>
+      </section>
+
+      <section className="familySection" aria-label="Smart Pillbox AI for families">
+        <Image src="/smart-pillbox-family.jpg" alt="An older couple enjoying time at home with a family caregiver" fill sizes="100vw" />
+        <div className="familyShade" />
+        <div className="familyCopy shell">
+          <span className="kicker">FOR INDEPENDENCE · FOR REASSURANCE</span>
+          <h2>A little more freedom for them.<br />A lot more peace of mind for you.</h2>
+          <p>Smart Pillbox AI keeps the medication routine visible without turning every day into a check-in. The person at home keeps their rhythm; family sees only the moments that may need attention.</p>
+          <div><span>No cameras</span><span>No constant calls</span><span>Clear human follow-up</span></div>
+        </div>
       </section>
 
       <section id="console" className="consoleSection shell">
         <header className="sectionHeader">
           <div>
-            <span className="kicker">INTERACTIVE JUDGE CONSOLE</span>
-            <h2>{view === "demo" ? "From sensor signal to safer action." : "Optimization you can reproduce."}</h2>
+            <span className="kicker">TRY SMART PILLBOX AI</span>
+            <h2>{view === "demo" ? "See an unusual medication moment unfold." : "Inspect the Arm64 optimization behind it."}</h2>
           </div>
           <div className="segmented" role="group" aria-label="Console view">
             <button aria-pressed={view === "demo"} onClick={() => setView("demo")} className={view === "demo" ? "selected" : ""}>Sensor simulation</button>
@@ -269,7 +311,7 @@ export default function EdgeConsole() {
         <div className="archFlow">
           <ArchNode tag="PHYSICAL" title="ESP32-S3" sub="Xtensa · sensors + Wi-Fi" icon="◎" />
           <div className="archArrow"><span>signed events</span>→</div>
-          <ArchNode tag="INTELLIGENCE" title="Arm64 Edge" sub="INT8 MLP · NEON kernels" icon="✣" featured />
+          <ArchNode tag="INTELLIGENCE" title="Arm64 AI" sub="INT8 MLP · NEON kernels" icon="✣" featured />
           <div className="archArrow"><span>bounded action</span>→</div>
           <ArchNode tag="CARE" title="Human loop" sub="lights · buzzer · alert" icon="◒" />
         </div>
@@ -277,13 +319,13 @@ export default function EdgeConsole() {
 
       <section className="safety shell">
         <div><span className="kicker">SAFETY BOUNDARY</span><h2>Useful AI. Honest claims.</h2></div>
-        <p>CareLoop detects compartment interactions and schedule risk. It never claims a medicine was swallowed, never changes a dose, and never replaces a clinician. Deterministic guardrails can always override the model.</p>
+        <p>Smart Pillbox AI detects compartment interactions and schedule risk. It never claims a medicine was swallowed, never changes a dose, and never replaces a clinician. Deterministic guardrails can always override the model.</p>
         <div className="safetyStamp"><span>✓</span><strong>RULES<br />BEFORE AI</strong></div>
       </section>
 
       <footer className="shell">
-        <div className="brand"><span className="brandMark"><i /><i /><i /></span><span>CareLoop <strong>Edge</strong></span></div>
-        <p>Built for the Arm Create: AI Optimization Challenge · Physical AI Track</p>
+        <div className="brand"><Image src="/brand-icon.png" alt="" aria-hidden="true" width={32} height={32} /><span>Smart Pillbox <strong>AI</strong></span></div>
+        <p>Smart Pillbox AI · Arm Physical AI Competition Edition</p>
         <span>Open source · MIT</span>
       </footer>
     </main>
@@ -305,7 +347,7 @@ function EvidencePanel({ runtime, setRuntime, metrics }: { runtime: Runtime; set
       <aside className="proofPanel">
         <div className="panelLabel">WHAT CHANGED</div>
         <ol><li><span>01</span><div><strong>INT8 weight representation</strong><p>4× smaller weights with fixed-range features.</p></div></li><li><span>02</span><div><strong>Arm NEON dot-product kernel</strong><p>Vectorized hot path with portable scalar fallback.</p></div></li><li><span>03</span><div><strong>Fused activation + requantization</strong><p>Fewer memory passes and temporary buffers.</p></div></li><li><span>04</span><div><strong>Judge-verifiable harness</strong><p>Arm-only gate, raw JSON, seven-run median.</p></div></li></ol>
-        <div className="proofFooter"><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/evidence/benchmark.arm64.latest.json" target="_blank" rel="noreferrer">Raw benchmark JSON ↗</a><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/scripts/benchmark.sh" target="_blank" rel="noreferrer">Arm run script ↗</a><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Architecture notes ↗</a></div>
+        <div className="proofFooter"><a href="https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI/blob/main/evidence/benchmark.arm64.latest.json" target="_blank" rel="noreferrer">Raw benchmark JSON ↗</a><a href="https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI/blob/main/scripts/benchmark.sh" target="_blank" rel="noreferrer">Arm run script ↗</a><a href="https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Architecture notes ↗</a></div>
       </aside>
     </div>
   );
@@ -313,6 +355,10 @@ function EvidencePanel({ runtime, setRuntime, metrics }: { runtime: Runtime; set
 
 function Metric({ value, label, note }: { value: string; label: string; note: string }) {
   return <div className="metric"><strong>{value}</strong><span>{label}</span><small>{note}</small></div>;
+}
+
+function ProductStep({ number, icon, title, copy }: { number: string; icon: string; title: string; copy: string }) {
+  return <article className="productStep"><div><span>{number}</span><i>{icon}</i></div><h3>{title}</h3><p>{copy}</p></article>;
 }
 
 function ArchNode({ tag, title, sub, icon, featured = false }: { tag: string; title: string; sub: string; icon: string; featured?: boolean }) {

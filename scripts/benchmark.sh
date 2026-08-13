@@ -11,7 +11,7 @@ case "$(uname -m)" in
 esac
 
 cc -O3 -DNDEBUG -Wall -Wextra \
-  "${PROJECT_DIR}/edge/model/careloop_edge.c" \
+  "${PROJECT_DIR}/edge/model/smart_pillbox_ai.c" \
   "${PROJECT_DIR}/edge/benchmark/benchmark.c" \
-  -o "${BUILD_DIR}/careloop-benchmark"
-"${BUILD_DIR}/careloop-benchmark" "${1:-1000000}"
+  -o "${BUILD_DIR}/smart-pillbox-ai-benchmark"
+"${BUILD_DIR}/smart-pillbox-ai-benchmark" "${1:-1000000}"

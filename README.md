@@ -1,10 +1,10 @@
 <div align="center">
-  <img src="public/favicon.svg" width="88" alt="CareLoop Edge mark" />
-  <h1>CareLoop Edge</h1>
+  <img src="public/brand-icon.png" width="88" alt="Smart Pillbox AI mark" />
+  <h1>Smart Pillbox AI</h1>
   <p><strong>Smart Pillbox AI · Arm Physical AI Competition Edition</strong></p>
   <p>Simulated pillbox sensing · Native Arm64 inference · Bounded medication-safety actions</p>
   <p>
-    <a href="https://careloop-edge-arm-ai.stephenovo.workers.dev"><strong>Live judge experience</strong></a>
+    <a href="https://smart-pillbox-ai-arm-physical-ai.stephenovo.workers.dev"><strong>Live judge experience</strong></a>
     ·
     <a href="https://github.com/stephenovo/Smart-Pillbox-AI">Original Smart Pillbox AI</a>
     ·
@@ -23,12 +23,12 @@
 </div>
 
 <p align="center">
-  <img src="public/og.png" width="1100" alt="CareLoop Edge physical, intelligence, and action layers" />
+  <img src="public/og.png" width="1100" alt="Smart Pillbox AI physical, intelligence, and action layers" />
 </p>
 
 ## Overview
 
-CareLoop Edge is a competition-focused edition of
+This repository contains the Arm competition edition of
 [Smart Pillbox AI](https://github.com/stephenovo/Smart-Pillbox-AI), created for
 the **Arm Create: AI Optimization Challenge · Physical AI track**. It keeps the
 same medication-safety concept, then isolates one question for judges and
@@ -44,10 +44,10 @@ benchmark with an INT8 Arm NEON fast path and an FP32 scalar reference.
 
 ## Relationship to Smart Pillbox AI
 
-This repository is a **standalone competition sibling**, not a rename or
+This edition is a **standalone competition sibling**, not a rename or
 replacement for the original product.
 
-| | Original Smart Pillbox AI | CareLoop Edge |
+| | Original product | Arm competition edition |
 | --- | --- | --- |
 | **Purpose** | End-to-end medication care platform | Arm competition and optimization proof |
 | **Main surfaces** | Web dashboard, native iOS app, Studio, ESP32-S3 path | Interactive judge console, Arm64 C kernel, benchmark evidence |
@@ -62,7 +62,7 @@ The original repository, deployment and `smartpb.me` domain remain untouched.
 ```mermaid
 flowchart LR
     A["Pillbox event\nreal or simulated"] --> B["ESP32-S3\nsensor controller"]
-    B -->|"signed event envelope"| C["Arm64 Edge Guardian\nINT8 + NEON"]
+    B -->|"signed event envelope"| C["Arm64 AI Module\nINT8 + NEON"]
     C --> D["Deterministic\nsafety policy"]
     D --> E["Light · reminder\nlocal queue · alert"]
     E --> F["Human confirmation\nand follow-up"]
@@ -135,7 +135,7 @@ recorded Arm64 evidence and the code required to reproduce it.
 ## Repository layout
 
 ```text
-Careloop-Edge-Arm-AI/
+Smart-Pillbox-AI-Arm-Physical-AI/
 ├── app/
 │   ├── EdgeConsole.tsx          # Interactive Physical AI judge experience
 │   └── globals.css              # Responsive competition visual system
@@ -158,14 +158,14 @@ Careloop-Edge-Arm-AI/
 Requirements: Node.js 22.13+, npm and a modern browser.
 
 ```bash
-git clone https://github.com/stephenovo/Careloop-Edge-Arm-AI.git
-cd Careloop-Edge-Arm-AI
+git clone https://github.com/stephenovo/Smart-Pillbox-AI-Arm-Physical-AI.git
+cd Smart-Pillbox-AI-Arm-Physical-AI
 npm install
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000), or use the deployed
-[judge experience](https://careloop-edge-arm-ai.stephenovo.workers.dev).
+[judge experience](https://smart-pillbox-ai-arm-physical-ai.stephenovo.workers.dev).
 
 ## Reproduce the Arm benchmark
 
@@ -202,7 +202,7 @@ hardware run.
 npm run deploy:cloudflare
 ```
 
-This publishes the standalone `careloop-edge-arm-ai` Worker. It does not modify
+This publishes the standalone `smart-pillbox-ai-arm-physical-ai` Worker. It does not modify
 the original Smart Pillbox AI service or domain.
 
 ## Hardware and evidence truth
@@ -219,7 +219,7 @@ the original Smart Pillbox AI service or domain.
 
 ## Safety boundary
 
-CareLoop Edge observes compartment interactions and schedule-risk patterns. It
+Smart Pillbox AI observes compartment interactions and schedule-risk patterns. It
 does **not** claim that medicine was swallowed, change dosage guidance, diagnose
 a condition or replace a clinician. Model scores pass through deterministic
 guardrails before any suggested light, reminder or caregiver action.

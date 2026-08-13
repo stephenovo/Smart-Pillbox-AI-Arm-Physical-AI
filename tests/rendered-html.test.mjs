@@ -10,16 +10,16 @@ async function render() {
   }, { waitUntil() {}, passThroughOnException() {} });
 }
 
-test("server-renders the CareLoop Edge competition experience", async () => {
+test("server-renders the Smart Pillbox AI competition experience", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /CareLoop Edge/);
-  assert.match(html, /Medication safety/);
+  assert.match(html, /Smart Pillbox AI/);
+  assert.match(html, /A smarter routine/);
   assert.match(html, /Physical AI Track/i);
   assert.match(html, /Peripheral hardware simulated/i);
-  assert.match(html, /Native Apple Silicon Arm64 run/i);
+  assert.match(html, /Arm64<\/b> optimized/i);
   assert.doesNotMatch(html, /No hardware required|100% local inference/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });

@@ -1,8 +1,8 @@
 # Devpost submission draft
 
-## CareLoop Edge: medication safety that never leaves home
+## Smart Pillbox AI: medication safety that never leaves home
 
-CareLoop Edge is a privacy-first Physical AI upgrade for Smart Pillbox AI. It
+Smart Pillbox AI is a privacy-first Physical AI upgrade for Smart Pillbox AI. It
 keeps the existing ESP32-S3 as a reliable sensor and connectivity controller,
 then adds an Arm64 edge guardian that classifies medication-adherence risk and
 produces bounded physical actions locally—even without internet access.
@@ -15,7 +15,7 @@ outage. A compact INT8 model scores each event on nearby Arm compute. A separate
 safety policy converts the result into a confirmation light, targeted reminder,
 hold-and-confirm flow, offline queue, or caregiver escalation.
 
-CareLoop does not claim that a medicine was swallowed. It detects compartment
+Smart Pillbox AI does not claim that a medicine was swallowed. It detects compartment
 interactions and risk patterns, and it never changes dosage guidance.
 
 ## Arm optimization

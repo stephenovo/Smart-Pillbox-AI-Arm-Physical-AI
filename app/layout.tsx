@@ -15,24 +15,28 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://careloop-edge-arm-ai.stephenovo.workers.dev"),
+  metadataBase: new URL("https://smart-pillbox-ai-arm-physical-ai.stephenovo.workers.dev"),
   title: {
-    default: "CareLoop Edge — Arm Physical AI",
-    template: "%s · CareLoop Edge",
+    default: "Smart Pillbox AI — Arm Physical AI",
+    template: "%s · Smart Pillbox AI",
   },
   description:
-    "Private, offline medication-risk inference on Arm64 edge devices, connected to an ESP32-S3 sensor controller.",
-  applicationName: "CareLoop Edge",
+    "A productized smart pillbox experience with private, offline medication-risk inference optimized for Arm64.",
+  applicationName: "Smart Pillbox AI",
+  icons: {
+    icon: "/brand-icon.png",
+    apple: "/brand-icon.png",
+  },
   openGraph: {
-    title: "CareLoop Edge",
-    description: "Physical AI. Private by design.",
+    title: "Smart Pillbox AI",
+    description: "Arm Physical AI. Private by design.",
     type: "website",
-    images: [{ url: "/og.png", width: 1746, height: 910, alt: "CareLoop Edge physical AI architecture" }],
+    images: [{ url: "/og.png", width: 1731, height: 909, alt: "Smart Pillbox AI physical, intelligence, and action layers" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CareLoop Edge",
-    description: "Physical AI. Private by design.",
+    title: "Smart Pillbox AI",
+    description: "Arm Physical AI. Private by design.",
     images: ["/og.png"],
   },
 };
