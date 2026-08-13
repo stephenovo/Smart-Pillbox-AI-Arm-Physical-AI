@@ -4,6 +4,10 @@ Arm-optimized Physical AI for private, offline medication-safety inference.
 This is a competition-specific sibling of Smart Pillbox AI; the original
 project remains untouched.
 
+**Live demo:** https://careloop-edge-arm-ai.stephenovo.workers.dev
+
+**Track:** Arm Create: AI Optimization Challenge · Physical AI
+
 ## Quick start
 
 ```bash
@@ -30,7 +34,7 @@ npm run deploy:cloudflare
 ```
 
 This builds the vinext worker and publishes it to the standalone
-`careloop-edge-arm-ai.workers.dev` service. It does not change the original
+`careloop-edge-arm-ai.stephenovo.workers.dev` service. It does not change the original
 Smart Pillbox AI Cloudflare Worker or `smartpb.me` domain.
 
 ## Project surfaces

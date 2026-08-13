@@ -132,7 +132,7 @@ export default function EdgeConsole() {
           <button className={view === "demo" ? "active" : ""} onClick={() => setView("demo")}>Live demo</button>
           <button className={view === "evidence" ? "active" : ""} onClick={() => setView("evidence")}>Evidence</button>
           <a href="#architecture">Architecture</a>
-          <a className="repoLink" href="https://github.com/stephenovo/smart-pillbox-ai" target="_blank" rel="noreferrer">Source ↗</a>
+          <a className="repoLink" href="https://github.com/stephenovo/careloop-edge-arm-ai" target="_blank" rel="noreferrer">Source ↗</a>
         </div>
       </nav>
 
