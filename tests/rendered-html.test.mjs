@@ -18,6 +18,8 @@ test("server-renders the CareLoop Edge competition experience", async () => {
   assert.match(html, /CareLoop Edge/);
   assert.match(html, /Medication safety/);
   assert.match(html, /Physical AI Track/i);
-  assert.match(html, /No hardware required/i);
+  assert.match(html, /Peripheral hardware simulated/i);
+  assert.match(html, /Native Apple Silicon Arm64 run/i);
+  assert.doesNotMatch(html, /No hardware required|100% local inference/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });

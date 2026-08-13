@@ -44,6 +44,7 @@ Smart Pillbox AI Cloudflare Worker or `smartpb.me` domain.
 - `edge/benchmark`: reproducible native timing harness
 - `docs/ARCHITECTURE.md`: hardware and no-hardware validation design
 - `docs/DEVPOST_SUBMISSION.md`: submission copy and video outline
+- `docs/DEMO_DAY_CHECKLIST.md`: deadline-aware recording and submission runbook
 
 ## Hardware truth
 

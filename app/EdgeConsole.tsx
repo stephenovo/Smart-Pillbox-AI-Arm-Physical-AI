@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Scenario = "on-time" | "missed" | "wrong-slot" | "duplicate" | "offline";
 type Runtime = "int8" | "fp32";
@@ -91,6 +91,7 @@ export default function EdgeConsole() {
   const [complete, setComplete] = useState(true);
   const [events, setEvents] = useState(1842);
   const [view, setView] = useState<"demo" | "evidence">("demo");
+  const inferenceTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
   const data = scenarios[scenario];
 
   const metrics = useMemo(
@@ -101,25 +102,36 @@ export default function EdgeConsole() {
     [runtime],
   );
 
-  function runInference(nextScenario = scenario) {
+  const runInference = useCallback((nextScenario: Scenario = scenario) => {
+    if (inferenceTimer.current) window.clearTimeout(inferenceTimer.current);
     setScenario(nextScenario);
     setRunning(true);
     setComplete(false);
-    window.setTimeout(() => {
+    inferenceTimer.current = window.setTimeout(() => {
       setRunning(false);
       setComplete(true);
       setEvents((value) => value + 1);
+      inferenceTimer.current = null;
     }, runtime === "int8" ? 620 : 1050);
-  }
+  }, [runtime, scenario]);
+
+  const showConsole = useCallback((nextView: "demo" | "evidence") => {
+    setView(nextView);
+    window.requestAnimationFrame(() => document.getElementById("console")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }, []);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       const index = Number(event.key) - 1;
-      if (index >= 0 && index < scenarioOrder.length) runInference(scenarioOrder[index]);
+      if (index >= 0 && index < scenarioOrder.length && !event.metaKey && !event.ctrlKey && !event.altKey) runInference(scenarioOrder[index]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  });
+  }, [runInference]);
+
+  useEffect(() => () => {
+    if (inferenceTimer.current) window.clearTimeout(inferenceTimer.current);
+  }, []);
 
   return (
     <main>
@@ -129,8 +141,8 @@ export default function EdgeConsole() {
           <span>CareLoop <strong>Edge</strong></span>
         </a>
         <div className="navLinks">
-          <button className={view === "demo" ? "active" : ""} onClick={() => setView("demo")}>Live demo</button>
-          <button className={view === "evidence" ? "active" : ""} onClick={() => setView("evidence")}>Evidence</button>
+          <button className={view === "demo" ? "active" : ""} onClick={() => showConsole("demo")}>Live demo</button>
+          <button className={view === "evidence" ? "active" : ""} onClick={() => showConsole("evidence")}>Evidence</button>
           <a href="#architecture">Architecture</a>
           <a className="repoLink" href="https://github.com/stephenovo/careloop-edge-arm-ai" target="_blank" rel="noreferrer">Source ↗</a>
         </div>
@@ -140,15 +152,15 @@ export default function EdgeConsole() {
         <div className="heroCopy">
           <div className="eyebrow"><span className="pulse" /> ARM CREATE · PHYSICAL AI TRACK</div>
           <h1>Medication safety<br />that never leaves <em>home.</em></h1>
-          <p className="lede">CareLoop Edge turns pillbox sensor events into private, offline decisions on Arm64—then acts before a small mistake becomes an emergency.</p>
+          <p className="lede">A privacy-first Physical AI prototype: production-shaped pillbox events, an Arm64-optimized inference kernel, and bounded safety actions.</p>
           <div className="heroActions">
-            <button className="primary" onClick={() => { setView("demo"); document.getElementById("console")?.scrollIntoView({ behavior: "smooth" }); }}>Run the edge demo <span>→</span></button>
-            <button className="secondary" onClick={() => { setView("evidence"); document.getElementById("console")?.scrollIntoView({ behavior: "smooth" }); }}>See optimization proof</button>
+            <button className="primary" onClick={() => showConsole("demo")}>Run the sensor simulation <span>→</span></button>
+            <button className="secondary" onClick={() => showConsole("evidence")}>Inspect Arm64 evidence</button>
           </div>
           <div className="trustRow">
-            <span><b>100%</b> local inference</span>
-            <span><b>0</b> sensor data sent to AI cloud</span>
-            <span><b>5</b> safety scenarios</span>
+            <span><b>Arm64</b> native kernel</span>
+            <span><b>INT8</b> NEON fast path</span>
+            <span><b>5</b> sensor fixtures</span>
           </div>
         </div>
 
@@ -164,26 +176,34 @@ export default function EdgeConsole() {
           <div className="edgeChip">
             <small>LOCAL EDGE</small>
             <strong>Arm64</strong>
-            <span>{running ? "INFERENCING" : "READY · INT8"}</span>
+            <span>{running ? "SIMULATING" : "REFERENCE · INT8"}</span>
           </div>
           <div className="signalLine lineTwo"><span /></div>
           <div className={`decisionBadge ${data.tone}`}>
             <small>PHYSICAL ACTION</small>
             <strong>{complete ? data.action : "Reading sensor vector…"}</strong>
           </div>
-          <div className="privacyTag">↯ offline ready</div>
+          <div className="privacyTag">↯ offline architecture</div>
         </div>
+      </section>
+
+      <section className="proofRail shell" aria-label="Evidence status">
+        <div><span className="proofIcon simulated">S</span><p><strong>Sensor layer</strong><small>Simulated production-shaped events</small></p></div>
+        <i>→</i>
+        <div><span className="proofIcon verified">A</span><p><strong>Compute layer</strong><small>Native Apple Silicon Arm64 run</small></p></div>
+        <i>→</i>
+        <div><span className="proofIcon open">O</span><p><strong>Evidence layer</strong><small>Open source harness + raw JSON</small></p></div>
       </section>
 
       <section id="console" className="consoleSection shell">
         <header className="sectionHeader">
           <div>
-            <span className="kicker">INTERACTIVE PROOF</span>
+            <span className="kicker">INTERACTIVE JUDGE CONSOLE</span>
             <h2>{view === "demo" ? "From sensor signal to safer action." : "Optimization you can reproduce."}</h2>
           </div>
           <div className="segmented" role="group" aria-label="Console view">
-            <button onClick={() => setView("demo")} className={view === "demo" ? "selected" : ""}>Live loop</button>
-            <button onClick={() => setView("evidence")} className={view === "evidence" ? "selected" : ""}>Benchmark lab</button>
+            <button aria-pressed={view === "demo"} onClick={() => setView("demo")} className={view === "demo" ? "selected" : ""}>Sensor simulation</button>
+            <button aria-pressed={view === "evidence"} onClick={() => setView("evidence")} className={view === "evidence" ? "selected" : ""}>Arm64 evidence</button>
           </div>
         </header>
 
@@ -192,21 +212,21 @@ export default function EdgeConsole() {
             <aside className="scenarioPanel">
               <div className="panelLabel">SIMULATED SENSOR INPUT <span>keys 1–5</span></div>
               {scenarioOrder.map((key, index) => (
-                <button key={key} onClick={() => runInference(key)} className={scenario === key ? "scenarioActive" : ""}>
+                <button key={key} aria-pressed={scenario === key} onClick={() => runInference(key)} className={scenario === key ? "scenarioActive" : ""}>
                   <span className="number">0{index + 1}</span>
                   <span><strong>{scenarios[key].label}</strong><small>{scenarios[key].short}</small></span>
                   <i>→</i>
                 </button>
               ))}
-              <div className="hardwareNote"><span>◌</span><p><strong>No hardware required</strong>This simulator emits the same signed event envelope as the ESP32-S3 firmware.</p></div>
+              <div className="hardwareNote"><span>SIM</span><p><strong>Peripheral hardware simulated</strong>The browser replays the semantic events an ESP32-S3 sensor controller would emit.</p></div>
             </aside>
 
             <div className="inferencePanel">
               <div className="panelTop">
-                <div><span className={`statusDot ${running ? "working" : ""}`} /> {running ? "Processing locally" : "Arm edge node online"}</div>
+                <div><span className={`statusDot ${running ? "working" : ""}`} /> {running ? "Replaying event fixture" : "Simulation console ready"}</div>
                 <div className="runtimeSwitch">
-                  <button onClick={() => setRuntime("fp32")} className={runtime === "fp32" ? "active" : ""}>FP32</button>
-                  <button onClick={() => setRuntime("int8")} className={runtime === "int8" ? "active" : ""}>INT8</button>
+                  <button aria-pressed={runtime === "fp32"} onClick={() => setRuntime("fp32")} className={runtime === "fp32" ? "active" : ""}>FP32 ref</button>
+                  <button aria-pressed={runtime === "int8"} onClick={() => setRuntime("int8")} className={runtime === "int8" ? "active" : ""}>INT8 NEON</button>
                 </div>
               </div>
               <div className="eventStrip">
@@ -222,12 +242,12 @@ export default function EdgeConsole() {
                   ))}
                 </div>
               </div>
-              <div className={`resultCard ${data.tone}`}>
+              <div className={`resultCard ${data.tone}`} role="status" aria-live="polite">
                 <div className="riskGauge" style={{ "--risk": `${data.risk * 3.6}deg` } as React.CSSProperties}><div><strong>{complete ? data.risk : "—"}</strong><span>risk</span></div></div>
-                <div className="resultCopy"><small>LOCAL DECISION · {data.confidence}% CONFIDENCE</small><h3>{complete ? data.decision : "Analyzing event pattern…"}</h3><p>{complete ? data.action : "No cloud request. No health data leaves the room."}</p></div>
-                <div className="latency"><small>INFERENCE</small><strong>{metrics.latency}</strong><span>{metrics.label}</span></div>
+                <div className="resultCopy"><small>SIMULATED POLICY OUTPUT · FIXTURE {data.confidence}%</small><h3>{complete ? data.decision : "Replaying event pattern…"}</h3><p>{complete ? data.action : "Preparing the reference edge response."}</p></div>
+                <div className="latency"><small>ARM64 MEDIAN</small><strong>{metrics.latency}</strong><span>{metrics.label}</span></div>
               </div>
-              <button className="runButton" onClick={() => runInference()} disabled={running}>{running ? <><span className="spinner" /> Running on Arm64…</> : <>Replay this inference <span>↻</span></>}</button>
+              <button className="runButton" onClick={() => runInference()} disabled={running}>{running ? <><span className="spinner" /> Replaying sensor event…</> : <>Replay selected scenario <span>↻</span></>}</button>
             </div>
           </div>
         ) : (
@@ -237,10 +257,10 @@ export default function EdgeConsole() {
 
       <section className="metricBand">
         <div className="shell metricGrid">
-          <Metric value="34.0×" label="faster inference loop" note="4.75 → 0.14 µs" />
+          <Metric value="34.0×" label="reference microbenchmark" note="4.75 → 0.14 µs · this host" />
           <Metric value="75%" label="smaller model weights" note="17 → 4.25 KB" />
           <Metric value="75%" label="less activation memory" note="512 → 128 B" />
-          <Metric value="100%" label="local by architecture" note="offline safety loop" />
+          <Metric value="7 runs" label="median reported" note="100k iterations each" />
         </div>
       </section>
 
@@ -275,7 +295,7 @@ function EvidencePanel({ runtime, setRuntime, metrics }: { runtime: Runtime; set
   return (
     <div className="evidenceGrid">
       <div className="benchmarkCard">
-        <div className="panelTop"><div><span className="statusDot" /> Apple M-series · arm64</div><div className="runtimeSwitch"><button onClick={() => setRuntime("fp32")} className={runtime === "fp32" ? "active" : ""}>FP32</button><button onClick={() => setRuntime("int8")} className={runtime === "int8" ? "active" : ""}>INT8 + NEON</button></div></div>
+        <div className="panelTop"><div><span className="statusDot" /> Recorded on Apple Silicon · arm64</div><div className="runtimeSwitch"><button aria-pressed={runtime === "fp32"} onClick={() => setRuntime("fp32")} className={runtime === "fp32" ? "active" : ""}>FP32 scalar</button><button aria-pressed={runtime === "int8"} onClick={() => setRuntime("int8")} className={runtime === "int8" ? "active" : ""}>INT8 NEON</button></div></div>
         <div className="comparisonTitle"><div><small>SELECTED RUNTIME</small><h3>{metrics.label}</h3></div><span className={runtime === "int8" ? "optimized" : "baseline"}>{runtime === "int8" ? "OPTIMIZED" : "BASELINE"}</span></div>
         <div className="benchmarkRows">
           {[{ name: "Median latency", unit: "µs", value: values[0], base: 4.75 }, { name: "Activation workspace", unit: "B", value: values[1], base: 512 }, { name: "Model weights", unit: "KB", value: values[2], base: 17 }].map((row) => <div className="benchmarkRow" key={row.name}><span>{row.name}</span><div className="horizontalTrack"><i style={{ width: `${(row.value / row.base) * 100}%` }} /></div><strong>{row.value} <small>{row.unit}</small></strong></div>)}
@@ -285,7 +305,7 @@ function EvidencePanel({ runtime, setRuntime, metrics }: { runtime: Runtime; set
       <aside className="proofPanel">
         <div className="panelLabel">WHAT CHANGED</div>
         <ol><li><span>01</span><div><strong>INT8 weight representation</strong><p>4× smaller weights with fixed-range features.</p></div></li><li><span>02</span><div><strong>Arm NEON dot-product kernel</strong><p>Vectorized hot path with portable scalar fallback.</p></div></li><li><span>03</span><div><strong>Fused activation + requantization</strong><p>Fewer memory passes and temporary buffers.</p></div></li><li><span>04</span><div><strong>Judge-verifiable harness</strong><p>Arm-only gate, raw JSON, seven-run median.</p></div></li></ol>
-        <div className="proofFooter"><span>Model card</span><span>Benchmark JSON</span><span>Arm build guide</span></div>
+        <div className="proofFooter"><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/evidence/benchmark.arm64.latest.json" target="_blank" rel="noreferrer">Raw benchmark JSON ↗</a><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/scripts/benchmark.sh" target="_blank" rel="noreferrer">Arm run script ↗</a><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Architecture notes ↗</a></div>
       </aside>
     </div>
   );
