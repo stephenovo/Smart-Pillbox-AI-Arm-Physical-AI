@@ -1,0 +1,19 @@
+
+> careloop-edge-arm-physical-ai@0.1.0 benchmark:arm
+> bash scripts/benchmark.sh 100000
+
+{
+  "architecture": "arm64",
+  "network": "32x64x32x4",
+  "iterations_per_run": 100000,
+  "runs": 7,
+  "statistic": "median",
+  "int8_ns": 139.64,
+  "fp32_ns": 4751.02,
+  "speedup": 34.023,
+  "int8_weight_bytes": 4352,
+  "fp32_weight_bytes": 17408,
+  "int8_activation_bytes": 128,
+  "fp32_activation_bytes": 512,
+  "checksum": 70001000
+}

@@ -1,0 +1,9 @@
+{
+  "status": "reference-display-dataset",
+  "disclosure": "Website comparison values are a frozen reference dataset for the competition UX. Run scripts/benchmark.sh to create host-verifiable results; do not represent this file as a hardware-independent claim.",
+  "platform": "Apple M-series development host (Arm64)",
+  "method": "10 warm-ups, 100000 inferences per sample, median of 7 runs",
+  "baseline": { "runtime": "FP32 scalar reference", "latency_us": 4.75, "activation_bytes": 512, "weight_bytes": 17408 },
+  "optimized": { "runtime": "INT8 Arm NEON", "latency_us": 0.14, "activation_bytes": 128, "weight_bytes": 4352 },
+  "hardware_note": "No physical pillbox or Raspberry Pi was available. Sensor events are simulated through the production-compatible envelope."
+}
