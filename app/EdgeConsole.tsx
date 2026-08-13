@@ -144,7 +144,7 @@ export default function EdgeConsole() {
           <button className={view === "demo" ? "active" : ""} onClick={() => showConsole("demo")}>Live demo</button>
           <button className={view === "evidence" ? "active" : ""} onClick={() => showConsole("evidence")}>Evidence</button>
           <a href="#architecture">Architecture</a>
-          <a className="repoLink" href="https://github.com/stephenovo/careloop-edge-arm-ai" target="_blank" rel="noreferrer">Source ↗</a>
+          <a className="repoLink" href="https://github.com/stephenovo/Careloop-Edge-Arm-AI" target="_blank" rel="noreferrer">Source ↗</a>
         </div>
       </nav>
 
@@ -305,7 +305,7 @@ function EvidencePanel({ runtime, setRuntime, metrics }: { runtime: Runtime; set
       <aside className="proofPanel">
         <div className="panelLabel">WHAT CHANGED</div>
         <ol><li><span>01</span><div><strong>INT8 weight representation</strong><p>4× smaller weights with fixed-range features.</p></div></li><li><span>02</span><div><strong>Arm NEON dot-product kernel</strong><p>Vectorized hot path with portable scalar fallback.</p></div></li><li><span>03</span><div><strong>Fused activation + requantization</strong><p>Fewer memory passes and temporary buffers.</p></div></li><li><span>04</span><div><strong>Judge-verifiable harness</strong><p>Arm-only gate, raw JSON, seven-run median.</p></div></li></ol>
-        <div className="proofFooter"><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/evidence/benchmark.arm64.latest.json" target="_blank" rel="noreferrer">Raw benchmark JSON ↗</a><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/scripts/benchmark.sh" target="_blank" rel="noreferrer">Arm run script ↗</a><a href="https://github.com/stephenovo/careloop-edge-arm-ai/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Architecture notes ↗</a></div>
+        <div className="proofFooter"><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/evidence/benchmark.arm64.latest.json" target="_blank" rel="noreferrer">Raw benchmark JSON ↗</a><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/scripts/benchmark.sh" target="_blank" rel="noreferrer">Arm run script ↗</a><a href="https://github.com/stephenovo/Careloop-Edge-Arm-AI/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Architecture notes ↗</a></div>
       </aside>
     </div>
   );

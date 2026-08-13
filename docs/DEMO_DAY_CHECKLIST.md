@@ -10,7 +10,7 @@ Do not redesign the product on submission morning. Confirm that these two URLs
 open in a signed-out/private browser window:
 
 - Live experience: <https://careloop-edge-arm-ai.stephenovo.workers.dev>
-- Public source: <https://github.com/stephenovo/careloop-edge-arm-ai>
+- Public source: <https://github.com/stephenovo/Careloop-Edge-Arm-AI>
 
 Then capture the exact Git commit used in the video:
 
