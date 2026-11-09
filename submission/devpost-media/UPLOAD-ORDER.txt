@@ -1,0 +1,26 @@
+SMART PILLBOX AI — DEVPOST MEDIA UPLOAD ORDER
+
+Thumbnail field:
+1. 01-devpost-thumbnail.png
+
+Image Gallery order:
+1. 02-product-hero.png
+   Caption: A calm, private medication companion powered by nearby Arm64 intelligence.
+
+2. 03-product-concept.png
+   Caption: The eight-compartment product concept keeps daily guidance simple and familiar.
+
+3. 04-live-simulation.png
+   Caption: A simulated wrong-compartment event becomes a bounded physical safety action.
+
+4. 05-arm64-evidence.png
+   Caption: Native Arm64 evidence compares the INT8 Arm NEON path with a scalar FP32 reference.
+
+5. 06-system-architecture.png
+   Caption: ESP32-S3 handles sensing while a nearby Arm64 node owns local AI inference.
+
+6. 07-human-impact.png
+   Caption: Smart Pillbox AI supports independence without cameras or constant check-ins.
+
+All images are 1350 × 900 or 1536 × 1024 (3:2) PNG files and are below
+Devpost's 5 MB per-image limit.
